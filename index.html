@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>1980s BTC BOARD</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #1c1c1c;
+      font-family: 'Press Start 2P', sans-serif;
+      color: #fff;
+    }
+    
+    .pixelated-bg {
+      background-image: repeating-linear-gradient(45deg, transparent, transparent 50px, rgba(255, 255, 255, 0.1) 50px, rgba(255, 255, 255, 0.1) 51px, transparent 51px, transparent 100px);
+      height: 100vh;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 4rem;
+      margin-top: 10vh;
+    }
+
+    p {
+      text-align: center;
+      font-size: 2rem;
+      margin-top: 2rem;
+    }
+
+    .buttons-container {
+  display: flex;
+  justify-content: center;
+  align-items: center; /* Add this line to center vertically */
+  flex-direction: row; /* Add this line to align the buttons vertically */
+  margin-top: 5rem;
+  text-align: center;
+}
+
+     .btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #ddd;
+      border: 2px solid #333;
+      border-radius: 6px;
+      font-size: 1.5rem;
+      padding: 1rem 2rem;
+      margin: 0 2rem;
+      cursor: pointer;
+      transition: all 0.2s ease-in-out;
+      font-family: 'Press Start 2P', sans-serif;
+      text-rendering: optimizeLegibility;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    .btn:hover {
+      background-color: #333;
+      color: #fff;
+      border-color: #ddd;
+    }
+
+    .btn-icon {
+      margin-right: 1rem;
+      font-size: 2rem;
+    }
+
+    .btn-box {
+      display: flex;
+      justify-content: center;
+      margin-top: 5rem;
+      font-size: 2rem;
+    }
+
+    .game-button {
+      text-align: center;
+      font-size: 2rem;
+      margin-top: 10vh;
+      margin-left: 1vh;
+font-family: 'Press Start 2P', sans-serif;
+}
+  </style>
+  <link href="https://fonts.googleapis.com/css?family=Press+Start+2P&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <div class="pixelated-bg">
+    <a style="display: flex; justify-content: center;" href="http://web3.auditutils.com"><img src="http://web3.auditutils.com/user137.PNG" alt="user137 Profile Picture" style="border-radius: 15px; border: 6px solid rgba(10, 202, 166, 0.9); margin: 30px; padding: 15px;"></a>
+
+    <h1>1980s Board</h1>
+    <p>Score: 0</p>
+    <div class="buttons-container">
+      <button class="game-button" id="time-button">Time</button>
+      <button class="game-button" id="btc-button">BTC</button>
+    </div>
+    <div class="info-box">
+      <p id="info-text"></p>
+    </div>
+  </div>
+  <script>
+  const timeButton = document.getElementById('time-button');
+const btcButton = document.getElementById('btc-button');
+const infoText = document.getElementById('info-text');
+const scoreText = document.querySelector('p');
+
+let score = 0; // Add this variable to store the score
+
+function getCurrentTime() {
+  const now = new Date();
+  const timeString = now.toLocaleTimeString();
+  infoText.textContent = `Current time: ${timeString}`;
+  score += 1; // Add this line to increment the score
+  scoreText.textContent = `Score: ${score}`; // Update the score display
+}
+
+
+
+function getBtcPrice() {
+  fetch('https://api.coindesk.com/v1/bpi/currentprice.json')
+    .then(response => response.json())
+    .then(data => {
+      const price = data.bpi.USD.rate;
+      infoText.textContent = `BTC price: ${price} USD`;
+      score += 1; // Add this line to increment the score
+      scoreText.textContent = `Score: ${score}`; // Update the score display
+    })
+    .catch(error => {
+      console.error('Error fetching BTC price:', error);
+      infoText.textContent = 'Error fetching BTC price';
+    });
+}
+
+timeButton.addEventListener('click', getCurrentTime);
+btcButton.addEventListener('click', getBtcPrice);
+
+const sound = new Audio('./final-fantasy-viii-cursor3.mp3');
+const buttons = document.querySelectorAll('.game-button');
+buttons.forEach(button => {
+  button.addEventListener('mouseenter', () => {
+    button.style.backgroundColor = '#ffd700';
+    button.style.color = '#000';
+    sound.play();
+  });
+  button.addEventListener('mouseleave', () => {
+    button.style.backgroundColor = '#000';
+    button.style.color = '#fff';
+  });
+	button.addEventListener('click', () => {
+			sound.play();
+		});
+});
+
+
+  </script>
+</body>
+</html>
